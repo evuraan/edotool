@@ -1,7 +1,7 @@
 # edotool
 
 - Simulate keystrokes. 
-- Like `xdotool` (kind of), except `X11` and `Wayland` both are supported. 
+- Like `xdotool`, with support for both `X11` and `Wayland`. 
 
 <img src="https://user-images.githubusercontent.com/39205936/130298707-8c845a13-4438-4bdc-a815-89451f549db6.png" width="50%">
 
