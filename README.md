@@ -28,6 +28,9 @@ Usage: ./edotool
   -i  /dev/input/event1  kbd device to use
   -e  --events           events to relay
 ```
+## Setup
+Either download the [release](https://github.com/evuraan/edotool/releases), or clone this repo and [build](./README.md#optional-build) it yourself. 
+
 ### Using /dev/input/eventXX 
 If you are  a member of `input` group, `edotool` can be run without root permissions. 
 ```bash  
@@ -75,33 +78,58 @@ key -->  KEY_F24
 ### Debug mode
 Send `-d` to turn on debugging. This would produce a <b>lot</b> of debug output:
 ```bash
-$ ./edotool -i /dev/input/event9 -e "KEY_SPACE + KEY_M + KEY_A + KEY_D + KEY_SPACE" -d
-Thu Aug 19 22:41:09 2021 edotool/1.03a Incoming events: KEY_SPACE + KEY_M + KEY_A + KEY_D + KEY_SPACE
-Thu Aug 19 22:41:09 2021edotool/1.03aCopyright © 2021 Evuraan <evuraan@gmail.com>. All rights reserved.
-This program comes with ABSOLUTELY NO WARRANTY.
-Thu Aug 19 22:41:09 2021 edotool/1.03a Howdy!
-Thu Aug 19 22:41:09 2021 edotool/1.03a keyboard device: /dev/input/event9
-Thu Aug 19 22:41:09 2021 [C] [getFd] fd opened: 3
-Thu Aug 19 22:41:09 2021 edotool/1.03a key: KEY_SPACE val: 57
-Thu Aug 19 22:41:09 2021 edotool/1.03a key: KEY_M val: 50
-Thu Aug 19 22:41:09 2021 edotool/1.03a key: KEY_A val: 30
-Thu Aug 19 22:41:09 2021 edotool/1.03a key: KEY_D val: 32
-Thu Aug 19 22:41:09 2021 edotool/1.03a key: KEY_SPACE val: 57
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 57
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 50
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 30
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 32
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 57
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 0 code 0
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 57
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 50
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 30
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 32
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 1 code 57
-Thu Aug 19 22:41:09 2021 [C] [emit] emitted 24 bytes type 0 code 0
-Thu Aug 19 22:41:09 2021 [C] [handleEvents] Handled 5 events
-Thu Aug 19 22:41:09 2021 edotool/1.03a Bye bye!
- mad
+$ ./edotool -d -e " Fun. "
+Sat Aug 21 12:20:25 2021 edotool/1.03d Copyright © 2021 Evuraan <evuraan@gmail.com>. All rights reserved.
+Sat Aug 21 12:20:25 2021 edotool/1.03d This program comes with ABSOLUTELY NO WARRANTY.
+Sat Aug 21 12:20:25 2021 edotool/1.03d Howdy!
+Sat Aug 21 12:20:25 2021 edotool/1.03d Incoming: | Fun. |
+Sat Aug 21 12:20:25 2021 edotool/1.03d keyboard device: /dev/input/event3
+Sat Aug 21 12:20:25 2021 [C] [getFd] fd opened: 3
+Sat Aug 21 12:20:25 2021 edotool/1.03d translated: KEY_SPACE+KEY_CAPSLOCK + KEY_F + KEY_CAPSLOCK+KEY_U+KEY_N+KEY_DOT+KEY_SPACE
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_SPACE val: 57
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_CAPSLOCK val: 58
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_F val: 33
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_CAPSLOCK val: 58
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_U val: 22
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_N val: 49
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_DOT val: 52
+Sat Aug 21 12:20:25 2021 edotool/1.03d key: KEY_SPACE val: 57
+Sat Aug 21 12:20:25 2021 edotool/1.03d combo: true
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 57
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 57
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 58
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 58
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 33
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 33
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 58
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 58
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 22
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 22
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 49
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 49
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 52
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 52
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 57
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 1 code 57
+Sat Aug 21 12:20:25 2021 [C] [emit] emitted 24 bytes type 0 code 0
+Sat Aug 21 12:20:25 2021 [C] [handleComboEvents] Handled 8 events
+Sat Aug 21 12:20:25 2021 edotool/1.03d Bye bye!
+ Fun.
 ```
 ## Optional: Build 
 If you prefer to build yourself, you will need the [Go Programming Language](https://golang.org/dl/) installed on your `Linux` System. 

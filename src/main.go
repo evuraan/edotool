@@ -234,7 +234,7 @@ var (
 
 const (
 	progName  = "edotool"
-	ver       = "1.03c"
+	ver       = "1.03d"
 	tag       = progName + "/" + ver
 	layout    = "Mon Jan 02 15:04:05 2006"
 	notifyCmd = "notify-send " + progName
@@ -254,10 +254,11 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Err 4.1 - inputEvents too short? (Hint: -e option)\n")
 		os.Exit(1)
 	}
-	print("Incoming events: %s", inputEvents)
 
-	print("Copyright © 2021 Evuraan <evuraan@gmail.com>. All rights reserved.\nThis program comes with ABSOLUTELY NO WARRANTY.\n")
+	print("Copyright © 2021 Evuraan <evuraan@gmail.com>. All rights reserved.")
+	print("This program comes with ABSOLUTELY NO WARRANTY.")
 	print("Howdy!")
+	print("Incoming: |%s|", inputEvents)
 	eventLibStuff.otherMaps = otherMap
 	workChan = make(chan string, 2)
 	go func() {
@@ -401,19 +402,18 @@ func (eventLibPtr *eventLib) handleEvent() (handleStatBool bool) {
 				}
 			}
 			if len(blip) < 1 {
-				print("Incapbalbe to handle: %s", keyString)
+				print("44.1 Cannot handle: %s", keyString)
 				continue
 			}
 			longString = fmt.Sprintf("%s+%s", longString, blip)
 		}
-		print("Unknown, at this time!")
 
 		if strings.HasPrefix(longString, "+") {
 			longString = longString[1:]
 		}
-		print("longString: %s", longString)
+		print("translated: %s", longString)
 		if len(longString) < 1 {
-			print("longstring too short")
+			print("translated string is too short")
 			return false
 		}
 		return self.process(longString, true)
@@ -445,6 +445,7 @@ func (eventLibPtr *eventLib) process(someString string, combo bool) (x bool) {
 	if k < 1 {
 		return false
 	}
+	print("combo: %v", combo)
 	eventArray[k] = 65535
 	if combo {
 		C.handleComboEvents((*C.int)(unsafe.Pointer(&eventArray[0])))
