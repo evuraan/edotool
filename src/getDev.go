@@ -76,3 +76,52 @@ func parseFileToMap(configFile string) (someDict map[int]string) {
 
 	return someDict
 }
+
+func showDevices() {
+	fmap := parseFileToMap(devices)
+	if len(fmap) < 1 {
+		return
+	}
+	devToName := make(map[string]string)
+	pat := regexp.MustCompile(`event\d*`)
+
+	for i := range fmap {
+		someLine := fmap[i]
+		if strings.HasPrefix(someLine, "N: Name=") {
+			name := someLine[8:]
+			if len(name) > 1 {
+				name = strings.ReplaceAll(name, "\"", "")
+				if len(name) <= 1 {
+					continue
+				}
+				pos := i + 4
+				if len(fmap) < pos {
+					continue
+				}
+				eventLine := fmap[pos]
+				s := pat.FindString(eventLine)
+
+				if len(s) > 0 {
+					devicePath := fmt.Sprintf("/dev/input/%s", s)
+					devToName[devicePath] = name
+				}
+			}
+		}
+	}
+
+	if len(devToName) < 1 {
+		fmt.Fprintf(os.Stderr, "Error: Could not find any input devices.\n")
+		os.Exit(1)
+	} else {
+		fmt.Printf("Available: %d devices\n", len(devToName))
+	}
+
+	for i := 0; i < len(devToName); i++ {
+		key := fmt.Sprintf("/dev/input/event%d", i)
+		rhs, ok := devToName[key]
+		if ok {
+			fmt.Printf("%s:\t%s\n", key, rhs)
+		}
+	}
+
+}

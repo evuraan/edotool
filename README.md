@@ -1,7 +1,7 @@
 # edotool
 
 - Simulate keystrokes. 
-- Like `xdotool` (well, kind of), with support for both `X11` and `Wayland`. 
+- Like `xdotool`, with support for both `X11` and `Wayland`. 
 
 <img src="https://user-images.githubusercontent.com/39205936/130298707-8c845a13-4438-4bdc-a815-89451f549db6.png" width="50%">
 
@@ -17,6 +17,9 @@ https://user-images.githubusercontent.com/39205936/130187383-776d230f-2dbd-480b-
 
 [mp4](https://evuraan.info/evuraan/stuff/edotool.mp4) | [gif](./edotool.gif)
 
+## Setup
+Either download the [release](https://github.com/evuraan/edotool/releases), or clone this repo and [build](./README.md#optional-build) it yourself. 
+
 ## Usage
 ```bash
 $ ./edotool -h
@@ -25,11 +28,59 @@ Usage: ./edotool
   -v  --version          print version information and exit
   -d  --debug            show verbose output
   -k  --keys             show available keys
-  -i  /dev/input/event1  kbd device to use
+  -i  /dev/input/event1  inputDevice device to use
   -e  --events           events to relay
+  -a  --available        show available devices
+  -r  --record           record from inputDevice
+  -p  --playback         play recorded events [root] 
+  --mouseAbs 100x100     move mouse to absolute coordinates [root] 
+  --mouseRel 100x100     move mouse to relative coordinates [root] 
 ```
-## Setup
-Either download the [release](https://github.com/evuraan/edotool/releases), or clone this repo and [build](./README.md#optional-build) it yourself. 
+### Show available devices
+Use the `-a` option to see available input devices:
+
+```bash
+$ ./edotool -a
+Available: 21 devices
+/dev/input/event0:	Power Button
+/dev/input/event1:	Power Button
+/dev/input/event2:	Video Bus
+/dev/input/event3:	Logitech K850
+/dev/input/event4:	Logitech M585/M590
+/dev/input/event5:	Shenzhen LogoTech  2.4GHz receiver 
+/dev/input/event6:	flirc.tv flirc Keyboard
+/dev/input/event7:	flirc.tv flirc Consumer Control
+/dev/input/event8:	flirc.tv flirc System Control
+/dev/input/event9:	Shenzhen LogoTech  2.4GHz receiver  Mouse
+/dev/input/event10:	Shenzhen LogoTech  2.4GHz receiver  Consumer Control
+/dev/input/event11:	Shenzhen LogoTech  2.4GHz receiver  System Control
+/dev/input/event12:	Sony Interactive Entertainment Controller
+/dev/input/event13:	Dell WMI hotkeys
+/dev/input/event14:	Microsoft® LifeCam Cinema(TM):
+/dev/input/event15:	HDA Intel PCH Rear Mic
+/dev/input/event16:	HDA Intel PCH Front Mic
+/dev/input/event17:	HDA Intel PCH Line Out
+/dev/input/event18:	HDA Intel PCH Front Headphone
+/dev/input/event19:	HDA Intel PCH HDMI/DP,pcm=3
+/dev/input/event20:	HDA Intel PCH HDMI/DP,pcm=7
+```
+### Record, Replay events
+Use the `r` option to record events as `.skit` files, `-p` with root access to replay your recorded skits:
+```bash
+$ ./edotool -i /dev/input/event3 -r
+Recoding device: /dev/input/event3
+Recording from /dev/input/event3 to file /tmp/edotool-Recorded-1632874726.skit, duration 10 seconds
+Sakioa boalccacd
+
+Done!
+Harvested 111 events to /tmp/edotool-Recorded-1632874726.skit
+```
+Replaying:
+```bash
+$ sudo  ./edotool -p /tmp/edotool-Recorded-1632874726.skit
+Replaying /tmp/edotool-Recorded-1632874726.skit
+Sakioa boalccacd
+```
 
 ### Using /dev/input/eventXX 
 If you are  a member of `input` group, `edotool` can be run without root permissions. 
@@ -131,6 +182,7 @@ Sat Aug 21 12:20:25 2021 [C] [handleComboEvents] Handled 8 events
 Sat Aug 21 12:20:25 2021 edotool/1.03d Bye bye!
  Fun.
 ```
+
 ## Optional: Build 
 If you prefer to build yourself, you will need the [Go Programming Language](https://golang.org/dl/) installed on your `Linux` System. 
 
