@@ -1,3 +1,5 @@
+/* Copyright (C) 2021  Evuraan, <evuraan@gmail.com> */
+
 package main
 
 import (
@@ -61,7 +63,6 @@ func recordFn(device string, duration int) bool {
 			typeThing := binary.LittleEndian.Uint16(data[16:18])
 			codeThing := binary.LittleEndian.Uint16(data[18:20])
 			value := binary.LittleEndian.Uint32(data[20:24])
-			// fmt.Printf("type: %d, code: %d, val: %d\n", typeThing, codeThing, value)
 			appendThis := fmt.Sprintf("%d|%d|%d\n", typeThing, codeThing, value)
 			tempMap[len(tempMap)] = appendThis
 			mu.Lock()
@@ -94,7 +95,6 @@ recordCleanup:
 		f, err := os.OpenFile(outputFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "recordFn err %v\n", err)
-			// return false
 			os.Exit(1) // hard exit
 		}
 		defer f.Close()
@@ -107,15 +107,7 @@ recordCleanup:
 			f.WriteString(writeThis)
 			hvst++
 		}
-		// enc := json.NewEncoder(f)
-		// err = enc.Encode(tempMap)
-		// if err != nil {
-		// 	fmt.Println("gob err", err)
-		// 	return false
-		// }
-
 		fmt.Printf("\nDone!\nHarvested %d events to %s\n", hvst, outputFile)
-
 	}
 	return xo > 0
 }

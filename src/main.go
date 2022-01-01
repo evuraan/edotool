@@ -9,7 +9,6 @@ package main
 #include <sys/stat.h>		// open
 #include <fcntl.h>		// open
 #include <unistd.h>		// read
-#include <sys/epoll.h>		// epoll
 #include <stdlib.h>		// EXIT_FAILURE
 #include <time.h> 		// time stuff
 #include <stdint.h> // need int32
@@ -331,7 +330,7 @@ var (
 
 const (
 	progName  = "edotool"
-	ver       = "3.01d"
+	ver       = "3.01e"
 	tag       = progName + "/" + ver
 	layout    = "Mon Jan 02 15:04:05 2006"
 	notifyCmd = "notify-send " + progName
@@ -616,7 +615,6 @@ func (eventLibPtr *eventLib) handleEvent() (handleStatBool bool) {
 		for i := range inputEvents {
 			key := inputEvents[i]
 			keyString := string(key)
-			upperCase := strings.ToUpper(keyString)
 			self.RLock()
 			hit, ok := self.otherMaps[keyString]
 			self.RUnlock()
@@ -625,7 +623,7 @@ func (eventLibPtr *eventLib) handleEvent() (handleStatBool bool) {
 				blip = hit
 			default:
 				keyu := strings.ToUpper(keyString)
-				if keyString == upperCase {
+				if keyString == keyu {
 					blip = fmt.Sprintf("KEY_CAPSLOCK + KEY_%s + KEY_CAPSLOCK", keyu)
 				} else {
 					blip = fmt.Sprintf("KEY_%s", keyu)
